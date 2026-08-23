@@ -14,7 +14,7 @@
 <body>
 <div class="app" id="app">
   <section class="hero">
-    <div><h1>🌿 ほの暮らしコンプチェッカー <span class="version-badge">v0.2.3</span></h1><p>2428個の図鑑を、遊びながら少しずつ育てるチェックリスト。</p></div>
+    <div><h1>🌿 ほの暮らしコンプチェッカー <span class="version-badge">v0.2.4</span></h1><p>2428個の図鑑を、遊びながら少しずつ育てるチェックリスト。</p></div>
     <div class="backup-actions">
       <button class="btn" id="exportJson">JSONバックアップ</button>
       <label class="btn" for="importJson">JSON復元</label><input class="file-input" id="importJson" type="file" accept="application/json,.json">
@@ -59,6 +59,7 @@
         <label class="label full">メモ<textarea class="field" id="fNote" placeholder="自由メモ"></textarea></label>
         <label class="label"><span>取得状態</span><select class="field" id="fObtained"><option value="0">未取得</option><option value="1">✓ 取得済</option></select></label>
         <label class="label"><span>調査状況</span><select class="field" id="fResearch"><option value="未特定">未特定</option><option value="確定">確定</option><option value="推定">推定</option><option value="手入力">手入力</option></select></label>
+        <label class="label full machine-candidate-option"><span>対応加工機候補</span><span class="season-option"><input type="checkbox" id="fMachineCandidate">⚙️ 対応加工機として選択可能</span><span class="hint">ONにしたアイテムだけ、ほかのアイテムの「対応加工機」候補に表示されるよ。</span></label>
         <div class="label full"><span>季節（該当するアイテムだけ選択）</span><div class="season-picker" id="seasonPicker"><label class="season-option"><input type="checkbox" value="春">🌸 春</label><label class="season-option"><input type="checkbox" value="夏">☀️ 夏</label><label class="season-option"><input type="checkbox" value="秋">🍂 秋</label><label class="season-option"><input type="checkbox" value="冬">❄️ 冬</label></div></div>
       </div>
 
@@ -86,7 +87,7 @@
 <script>
 (()=>{
 'use strict';
-const VERSION='0.2.3';
+const VERSION='0.2.4';
 const KEY='honogurashi-checker-v0.1';
 let base=JSON.parse(document.getElementById('base-data').textContent);
 let baseMap=new Map(base.map(x=>[x.id,x]));
@@ -130,7 +131,7 @@ function rowsToBase(rows){
  const mapped=rows.map(r=>{
   const id=Number(String(r['図鑑番号']??r['id']??'').replace(/^#/,'').trim());
   if(!Number.isInteger(id)||id<1||id>2428)return null;
-  return {id,name:String(r['アイテム名']??r['name']??'').trim(),category:String(r['カテゴリ']??r['category']??'').trim(),researchStatus:String(r['調査状況']??r['researchStatus']??'未特定').trim()||'未特定',acquire:String(r['入手方法・補足']??r['acquire']??'').trim(),sell:String(r['売値']??r['sell']??'').trim(),source:String(r['出典URL']??r['source']??'').trim(),note:String(r['備考']??r['note']??'').trim(),materials:splitRelations(r['使用材料']).map(x=>relationFromText(x,true)),machines:splitRelations(r['対応加工機']).map(x=>relationFromText(x,false)),seasons:String(r['季節']??r['seasons']??'').split(/[・,、/\s]+/).map(x=>x.trim()).filter(x=>['春','夏','秋','冬'].includes(x)),updatedAt:String(r['最終更新']??'').trim()};
+  return {id,name:String(r['アイテム名']??r['name']??'').trim(),category:String(r['カテゴリ']??r['category']??'').trim(),researchStatus:String(r['調査状況']??r['researchStatus']??'未特定').trim()||'未特定',acquire:String(r['入手方法・補足']??r['acquire']??'').trim(),sell:String(r['売値']??r['sell']??'').trim(),source:String(r['出典URL']??r['source']??'').trim(),note:String(r['備考']??r['note']??'').trim(),materials:splitRelations(r['使用材料']).map(x=>relationFromText(x,true)),machines:splitRelations(r['対応加工機']).map(x=>relationFromText(x,false)),seasons:String(r['季節']??r['seasons']??'').split(/[・,、/\s]+/).map(x=>x.trim()).filter(x=>['春','夏','秋','冬'].includes(x)),machineCandidate:/^(1|true|yes|on|○|〇|候補)$/i.test(String(r['加工機候補']??r['machineCandidate']??'').trim()),updatedAt:String(r['最終更新']??'').trim()};
  }).filter(Boolean);
  const byId=new Map(mapped.map(x=>[x.id,x]));
  return Array.from({length:2428},(_,i)=>byId.get(i+1)||{id:i+1,name:'',category:'',researchStatus:'未特定',acquire:'',sell:'',source:'',note:'',materials:[],machines:[],seasons:[]});
@@ -155,7 +156,9 @@ function buildLists(){
 function refreshDatalists(){
  const known=base.map(x=>merged(x.id)).filter(x=>x.name);
  $('#itemList').innerHTML=known.map(x=>`<option value="${pad(x.id)} | ${esc(x.name)}"></option>`).join('');
- const machines=known.filter(x=>/機|道具|器|台|樽/.test((x.category||'')+(x.name||'')));
+ const referencedIds=new Set();
+ for(const item of base.map(x=>merged(x.id))){for(const r of (item.machines||[])){if(r.itemId)referencedIds.add(Number(r.itemId));}}
+ const machines=known.filter(x=>x.machineCandidate===true||referencedIds.has(Number(x.id)));
  $('#machineList').innerHTML=machines.map(x=>`<option value="${pad(x.id)} | ${esc(x.name)}"></option>`).join('');
 }
 function renderStats(){const n=Object.values(state.obtained).filter(Boolean).length;els.obtainedCount.textContent=n.toLocaleString();els.remaining.textContent=(2428-n).toLocaleString();const r=n/2428*100;els.rate.textContent=r.toFixed(1)+'%';els.progress.style.width=r+'%'}
@@ -175,6 +178,7 @@ function render(){renderStats();const arr=filtered();els.shownCount.textContent=
 function toggle(id){state.obtained[id]=!isObtained(id);saveState();render()}
 
 function openEditor(id){editingId=id;const x=merged(id);$('#editNo').textContent='#'+pad(id);$('#editTitle').textContent=x.name||'未登録アイテム';$('#fName').value=x.name||'';$('#fCategory').value=x.category||'';$('#fSell').value=x.sell||'';$('#fAcquire').value=x.acquire||'';$('#fNote').value=x.note||'';$('#fObtained').value=isObtained(id)?'1':'0';$('#fResearch').value=['未特定','確定','推定','手入力'].includes(x.researchStatus)?x.researchStatus:(manualFlag(x)?'手入力':'未特定');
+ $('#fMachineCandidate').checked=x.machineCandidate===true;
  $$('#seasonPicker input[type="checkbox"]').forEach(cb=>cb.checked=(x.seasons||[]).includes(cb.value));
  els.materials.innerHTML='';(x.materials||[]).forEach(addMaterialRow);els.machines.innerHTML='';(x.machines||[]).forEach(addMachineRow);els.editor.showModal();}
 function parseRef(v){const m=String(v).match(/^\s*(\d{1,4})\s*\|\s*(.+)$/);if(m){const id=Number(m[1]);return {itemId:baseMap.has(id)?id:null,name:m[2].trim()}}return {itemId:null,name:String(v).trim()}}
@@ -185,7 +189,7 @@ function addMaterialRow(data={}){const row=document.createElement('div');row.cla
 function addMachineRow(data={}){const row=document.createElement('div');row.className='relation machine-rel';row.innerHTML=`<input class="field mini rel-name" list="machineList" placeholder="加工機名" value="${esc(refDisplay(data))}"><button class="remove" type="button" aria-label="削除">×</button>`;row.querySelector('.remove').addEventListener('click',()=>row.remove());els.machines.appendChild(row)}
 function collectRelations(container,withQty){return [...container.querySelectorAll('.relation')].map(r=>{const ref=parseRef(r.querySelector('.rel-name').value);if(!ref.name&&!ref.itemId)return null;const obj={itemId:ref.itemId,name:ref.name};if(withQty)obj.quantity=Math.max(0,Number(r.querySelector('.rel-qty').value||1));return obj}).filter(Boolean)}
 function saveEditor(e){e.preventDefault();if(!editingId)return;const b=baseMap.get(editingId);const materials=collectRelations(els.materials,true),machines=collectRelations(els.machines,false),seasons=$$('#seasonPicker input[type="checkbox"]:checked').map(cb=>cb.value);state.obtained[editingId]=$('#fObtained').value==='1';
- state.overrides[editingId]={name:$('#fName').value.trim(),category:$('#fCategory').value.trim(),researchStatus:$('#fResearch').value==='未特定'&&($('#fName').value.trim()!==b.name||$('#fCategory').value.trim()!==b.category)?'手入力':$('#fResearch').value,acquire:$('#fAcquire').value.trim(),sell:$('#fSell').value.trim(),source:b.source||'',note:markManual($('#fNote').value.trim()),materials,machines,seasons,updatedAt:new Date().toISOString()};
+ state.overrides[editingId]={name:$('#fName').value.trim(),category:$('#fCategory').value.trim(),researchStatus:$('#fResearch').value==='未特定'&&($('#fName').value.trim()!==b.name||$('#fCategory').value.trim()!==b.category)?'手入力':$('#fResearch').value,acquire:$('#fAcquire').value.trim(),sell:$('#fSell').value.trim(),source:b.source||'',note:markManual($('#fNote').value.trim()),materials,machines,seasons,machineCandidate:$('#fMachineCandidate').checked,updatedAt:new Date().toISOString()};
  saveState();refreshDatalists();els.editor.close();render();showToast('保存したよ ✓')}
 function markManual(note){return note.includes('手入力')?note:(note?note+' / 手入力':'手入力')}
 function resetItem(){if(!editingId)return;if(!confirm('このアイテムに加えた編集・レシピ情報を元に戻す？\n取得状態はそのまま残すよ。'))return;delete state.overrides[editingId];saveState();els.editor.close();render();showToast('編集内容を元に戻したよ')}
@@ -193,7 +197,7 @@ function resetItem(){if(!editingId)return;if(!confirm('このアイテムに加�
 function download(name,text,type){const blob=new Blob([text],{type});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=name;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(a.href),1000)}
 function exportJson(){const payload={app:'ほの暮らしコンプチェッカー',version:VERSION,exportedAt:new Date().toISOString(),obtained:state.obtained,overrides:state.overrides};download(`honogurashi-backup-${new Date().toISOString().slice(0,10)}.json`,JSON.stringify(payload,null,2),'application/json')}
 function csvCell(v){const s=String(v??'');return /[",\n]/.test(s)?'"'+s.replace(/"/g,'""')+'"':s}
-function exportCsv(){const heads=['図鑑番号','アイテム名','カテゴリ','調査状況','入手方法・補足','売値','出典URL','備考','取得状況','季節','使用材料','対応加工機','最終更新'];const lines=[heads.join(',')];for(const b of base){const x=merged(b.id);const mats=(x.materials||[]).map(r=>`${refDisplay(r)} ×${r.quantity??1}`).join(' / ');const mach=(x.machines||[]).map(refDisplay).join(' / ');lines.push([x.id,x.name,x.category,x.researchStatus,x.acquire,x.sell,x.source,x.note,isObtained(x.id)?'取得済':'未取得',(x.seasons||[]).join('・'),mats,mach,x.updatedAt].map(csvCell).join(','))}download(`honogurashi-items-${new Date().toISOString().slice(0,10)}.csv`,'\ufeff'+lines.join('\r\n'),'text/csv;charset=utf-8')}
+function exportCsv(){const heads=['図鑑番号','アイテム名','カテゴリ','調査状況','入手方法・補足','売値','出典URL','備考','取得状況','季節','使用材料','対応加工機','加工機候補','最終更新'];const lines=[heads.join(',')];for(const b of base){const x=merged(b.id);const mats=(x.materials||[]).map(r=>`${refDisplay(r)} ×${r.quantity??1}`).join(' / ');const mach=(x.machines||[]).map(refDisplay).join(' / ');lines.push([x.id,x.name,x.category,x.researchStatus,x.acquire,x.sell,x.source,x.note,isObtained(x.id)?'取得済':'未取得',(x.seasons||[]).join('・'),mats,mach,x.machineCandidate?'1':'',x.updatedAt].map(csvCell).join(','))}download(`honogurashi-items-${new Date().toISOString().slice(0,10)}.csv`,'\ufeff'+lines.join('\r\n'),'text/csv;charset=utf-8')}
 function importJson(file){const fr=new FileReader();fr.onload=()=>{try{const d=JSON.parse(fr.result);if(!d||typeof d!=='object'||!d.obtained||!d.overrides)throw new Error();if(!confirm('現在の保存データを、このバックアップ内容で置き換える？'))return;state={version:VERSION,obtained:d.obtained,overrides:d.overrides};saveState();refreshDatalists();render();showToast('バックアップを復元したよ ✓')}catch(e){alert('このJSONは読み込めなかったよ。バックアップファイルを確認してね。')}};fr.readAsText(file)}
 
 els.items.addEventListener('click',e=>{const edit=e.target.closest('[data-edit]');if(edit){e.stopPropagation();openEditor(Number(edit.dataset.edit));return}const tog=e.target.closest('[data-toggle]');if(tog){e.stopPropagation();toggle(Number(tog.dataset.toggle));return}const row=e.target.closest('.item');if(row)toggle(Number(row.dataset.id))});
