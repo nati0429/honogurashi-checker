@@ -7,7 +7,7 @@
 <title>ほの暮らしコンプチェッカー</title>
 <style>
 :root{--bg:#f5f2ea;--panel:#fffdf8;--text:#292b27;--muted:#6e746b;--line:#dedfd7;--green:#dfeadb;--green2:#718a69;--green3:#536b4f;--gray:#eeeee9;--pink:#ead9da;--warn:#fff0c7;--shadow:0 10px 30px rgba(45,50,42,.08);font-family:ui-rounded,"Hiragino Maru Gothic ProN","Yu Gothic",Meiryo,sans-serif}
-*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text)}button,input,select,textarea{font:inherit}button{cursor:pointer}.app{max-width:1040px;margin:auto;padding:18px 14px 80px}.hero{display:flex;gap:16px;align-items:flex-start;justify-content:space-between;flex-wrap:wrap;margin:4px 0 14px}.hero h1{font-size:clamp(22px,5vw,34px);margin:0 0 6px}.hero p{margin:0;color:var(--muted);font-size:14px}.backup-actions{display:flex;gap:8px;flex-wrap:wrap}.btn{border:1px solid var(--line);background:var(--panel);border-radius:11px;padding:10px 12px;min-height:44px;color:var(--text)}.btn:hover{border-color:#bbb}.btn.primary{background:var(--green2);border-color:var(--green2);color:#fff}.btn.danger{color:#9a4242}.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:14px 0}.stat{background:var(--panel);border:1px solid var(--line);border-radius:15px;padding:13px 14px;box-shadow:var(--shadow)}.stat b{display:block;font-size:24px;margin-top:3px}.stat span{font-size:12px;color:var(--muted)}.progress-wrap{grid-column:1/-1;background:#e5e4dd;border-radius:999px;height:10px;overflow:hidden}.progress-bar{height:100%;background:var(--green2);width:0;transition:width .2s}.toolbar{position:sticky;top:0;z-index:3;background:color-mix(in srgb,var(--bg) 92%, transparent);backdrop-filter:blur(9px);padding:10px 0 8px}.search-row{display:grid;grid-template-columns:1fr 170px 190px;gap:8px}.field{width:100%;min-height:44px;border:1px solid var(--line);border-radius:11px;background:var(--panel);padding:10px 12px;color:var(--text)}.filter-chips{display:flex;gap:7px;overflow:auto;padding:8px 0 2px;scrollbar-width:thin}.chip{white-space:nowrap;border:1px solid var(--line);background:var(--panel);padding:8px 11px;border-radius:999px;min-height:38px}.chip.active{background:var(--green3);border-color:var(--green3);color:white}.summaryline{display:flex;justify-content:space-between;gap:10px;align-items:center;color:var(--muted);font-size:13px;margin:8px 2px}.items{display:grid;gap:8px}.item{display:grid;grid-template-columns:78px 1fr auto;gap:10px;align-items:center;border:1px solid var(--line);background:var(--gray);border-radius:13px;min-height:64px;padding:8px 8px 8px 12px;transition:.12s}.item.obtained{background:var(--green);border-color:#c2d4bd}.item:hover{transform:translateY(-1px)}.no{font-variant-numeric:tabular-nums;color:var(--muted);font-weight:700}.name{font-weight:700;line-height:1.35}.unknown .name{color:#8a8f87}.meta{display:flex;gap:6px;flex-wrap:wrap;margin-top:5px}.tag{font-size:11px;border:1px solid #d1d1ca;background:rgba(255,255,255,.55);border-radius:999px;padding:3px 7px;color:#62675f}.tag.recipe{background:#f0e4cd}.tag.manual{background:#eadde4}.status-btn{min-width:112px;min-height:46px;border:none;border-radius:10px;background:#deded8;color:#50544d;font-weight:700}.obtained .status-btn{background:var(--green2);color:white}.empty{padding:50px 10px;text-align:center;color:var(--muted)}.modal{border:none;border-radius:18px;padding:0;width:min(760px,calc(100% - 22px));max-height:90%;box-shadow:0 25px 70px rgba(0,0,0,.25);background:var(--panel);color:var(--text)}.modal::backdrop{background:rgba(20,25,18,.45);backdrop-filter:blur(2px)}.modal-head{position:sticky;top:0;background:var(--panel);z-index:2;padding:18px 18px 12px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;gap:10px;align-items:flex-start}.modal-head h2{margin:0;font-size:22px}.close{border:0;background:transparent;font-size:24px;padding:4px 9px}.modal-body{padding:16px 18px 22px}.grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}.full{grid-column:1/-1}.label{display:grid;gap:6px;font-size:13px;color:var(--muted)}textarea.field{min-height:90px;resize:vertical}.section{margin-top:20px;padding-top:15px;border-top:1px dashed var(--line)}.section-title{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:10px}.section-title h3{margin:0;font-size:16px}.relation-list{display:grid;gap:8px}.relation{display:grid;grid-template-columns:1fr 90px 44px;gap:7px;align-items:center}.machine-rel{grid-template-columns:1fr 44px}.mini{min-height:40px;padding:7px 9px}.remove{border:1px solid #e1c8c8;background:#fff6f6;border-radius:9px;min-height:40px}.modal-actions{display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap;margin-top:20px}.left-actions,.right-actions{display:flex;gap:8px;flex-wrap:wrap}.hint{font-size:12px;color:var(--muted);margin:6px 0}.toast{position:fixed;left:50%;bottom:20px;transform:translateX(-50%);background:#30352f;color:white;padding:10px 14px;border-radius:999px;opacity:0;pointer-events:none;transition:.2s;z-index:10}.toast.show{opacity:1}.file-input{display:none}.kbd{font-family:monospace;background:#ebeae3;border:1px solid #d6d5cd;border-radius:5px;padding:1px 5px}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text)}button,input,select,textarea{font:inherit}button{cursor:pointer}.app{max-width:1040px;margin:auto;padding:18px 14px 80px}.hero{display:flex;gap:16px;align-items:flex-start;justify-content:space-between;flex-wrap:wrap;margin:4px 0 14px}.hero h1{font-size:clamp(22px,5vw,34px);margin:0 0 6px}.hero p{margin:0;color:var(--muted);font-size:14px}.backup-actions{display:flex;gap:8px;flex-wrap:wrap}.btn{border:1px solid var(--line);background:var(--panel);border-radius:11px;padding:10px 12px;min-height:44px;color:var(--text)}.btn:hover{border-color:#bbb}.btn.primary{background:var(--green2);border-color:var(--green2);color:#fff}.btn.danger{color:#9a4242}.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:14px 0}.stat{background:var(--panel);border:1px solid var(--line);border-radius:15px;padding:13px 14px;box-shadow:var(--shadow)}.stat b{display:block;font-size:24px;margin-top:3px}.stat span{font-size:12px;color:var(--muted)}.progress-wrap{grid-column:1/-1;background:#e5e4dd;border-radius:999px;height:10px;overflow:hidden}.progress-bar{height:100%;background:var(--green2);width:0;transition:width .2s}.toolbar{position:sticky;top:0;z-index:3;background:color-mix(in srgb,var(--bg) 92%, transparent);backdrop-filter:blur(9px);padding:10px 0 8px}.search-row{display:grid;grid-template-columns:1fr 170px 190px;gap:8px}.field{width:100%;min-height:44px;border:1px solid var(--line);border-radius:11px;background:var(--panel);padding:10px 12px;color:var(--text)}.filter-chips{display:flex;gap:7px;overflow:auto;padding:8px 0 2px;scrollbar-width:thin}.chip{white-space:nowrap;border:1px solid var(--line);background:var(--panel);padding:8px 11px;border-radius:999px;min-height:38px}.chip.active{background:var(--green3);border-color:var(--green3);color:white}.summaryline{display:flex;justify-content:space-between;gap:10px;align-items:center;color:var(--muted);font-size:13px;margin:8px 2px}.items{display:grid;gap:8px}.item{display:grid;grid-template-columns:78px 1fr auto;gap:10px;align-items:center;border:1px solid var(--line);background:var(--gray);border-radius:13px;min-height:64px;padding:8px 8px 8px 12px;transition:.12s}.item.obtained{background:var(--green);border-color:#c2d4bd}.item:hover{transform:translateY(-1px)}.no{font-variant-numeric:tabular-nums;color:var(--muted);font-weight:700}.name{font-weight:700;line-height:1.35}.unknown .name{color:#8a8f87}.meta{display:flex;gap:6px;flex-wrap:wrap;margin-top:5px}.tag{font-size:11px;border:1px solid #d1d1ca;background:rgba(255,255,255,.55);border-radius:999px;padding:3px 7px;color:#62675f}.tag.machine{background:#e6ece3;border-color:#c8d3c2;color:#4f6250;font-weight:700}.status-btn{min-width:112px;min-height:46px;border:none;border-radius:10px;background:#deded8;color:#50544d;font-weight:700}.obtained .status-btn{background:var(--green2);color:white}.empty{padding:50px 10px;text-align:center;color:var(--muted)}.modal{border:none;border-radius:18px;padding:0;width:min(760px,calc(100% - 22px));max-height:90%;box-shadow:0 25px 70px rgba(0,0,0,.25);background:var(--panel);color:var(--text)}.modal::backdrop{background:rgba(20,25,18,.45);backdrop-filter:blur(2px)}.modal-head{position:sticky;top:0;background:var(--panel);z-index:2;padding:18px 18px 12px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;gap:10px;align-items:flex-start}.modal-head h2{margin:0;font-size:22px}.close{border:0;background:transparent;font-size:24px;padding:4px 9px}.modal-body{padding:16px 18px 22px}.grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}.full{grid-column:1/-1}.label{display:grid;gap:6px;font-size:13px;color:var(--muted)}textarea.field{min-height:90px;resize:vertical}.section{margin-top:20px;padding-top:15px;border-top:1px dashed var(--line)}.section-title{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:10px}.section-title h3{margin:0;font-size:16px}.relation-list{display:grid;gap:8px}.relation{display:grid;grid-template-columns:1fr 90px 44px;gap:7px;align-items:center}.machine-rel{grid-template-columns:1fr 44px}.mini{min-height:40px;padding:7px 9px}.remove{border:1px solid #e1c8c8;background:#fff6f6;border-radius:9px;min-height:40px}.modal-actions{display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap;margin-top:20px}.left-actions,.right-actions{display:flex;gap:8px;flex-wrap:wrap}.hint{font-size:12px;color:var(--muted);margin:6px 0}.toast{position:fixed;left:50%;bottom:20px;transform:translateX(-50%);background:#30352f;color:white;padding:10px 14px;border-radius:999px;opacity:0;pointer-events:none;transition:.2s;z-index:10}.toast.show{opacity:1}.file-input{display:none}.kbd{font-family:monospace;background:#ebeae3;border:1px solid #d6d5cd;border-radius:5px;padding:1px 5px}
 @media(max-width:700px){.stats{grid-template-columns:repeat(2,1fr)}.search-row{grid-template-columns:1fr 1fr}.search-row .search{grid-column:1/-1}.item{grid-template-columns:62px 1fr}.status-btn{grid-column:1/-1;width:100%;min-height:38px}.grid2{grid-template-columns:1fr}.full{grid-column:auto}.relation{grid-template-columns:1fr 76px 42px}.machine-rel{grid-template-columns:1fr 42px}.backup-actions{width:100%}.backup-actions .btn{flex:1}.stat b{font-size:21px}}
 </style>
 </head>
@@ -41,8 +41,6 @@
       <button class="chip" data-filter="missing">未取得</button>
       <button class="chip" data-filter="obtained">取得済</button>
       <button class="chip" data-filter="unknown">情報未登録</button>
-      <button class="chip" data-filter="recipe">レシピあり</button>
-      <button class="chip" data-filter="manual">手入力</button>
     </div>
   </section>
   <div class="summaryline"><span id="shownCount"></span><span>行を押すと取得状態を切替 ／「編集」で情報登録</span></div>
@@ -87,10 +85,10 @@
 <script>
 (()=>{
 'use strict';
-const VERSION='0.1.0';
+const VERSION='0.2.0';
 const KEY='honogurashi-checker-v0.1';
-const base=JSON.parse(document.getElementById('base-data').textContent);
-const baseMap=new Map(base.map(x=>[x.id,x]));
+let base=JSON.parse(document.getElementById('base-data').textContent);
+let baseMap=new Map(base.map(x=>[x.id,x]));
 let state=loadState();
 let activeFilter='all', editingId=null;
 const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
@@ -98,13 +96,55 @@ const els={items:$('#items'),search:$('#search'),category:$('#category'),sort:$(
 
 function loadState(){try{const raw=localStorage.getItem(KEY);if(!raw)return {version:VERSION,obtained:{},overrides:{}};const s=JSON.parse(raw);return {version:VERSION,obtained:s.obtained||{},overrides:s.overrides||{}}}catch(e){return {version:VERSION,obtained:{},overrides:{}}}}
 function saveState(){localStorage.setItem(KEY,JSON.stringify(state))}
-function merged(id){const b=baseMap.get(id);const o=state.overrides[id]||{};return {...b,...o,id,materials:o.materials||[],machines:o.machines||[],updatedAt:o.updatedAt||''}}
+function merged(id){const b=baseMap.get(id)||{id,name:'',category:'',researchStatus:'未特定',acquire:'',sell:'',source:'',note:'',materials:[],machines:[]};const o=state.overrides[id]||{};return {...b,...o,id,materials:o.materials??b.materials??[],machines:o.machines??b.machines??[],updatedAt:o.updatedAt||b.updatedAt||''}}
 function isObtained(id){return !!state.obtained[id]}
 function manualFlag(item){const o=state.overrides[item.id];return !!o || item.researchStatus==='手入力' || (item.note||'').includes('手入力')}
 function pad(id){return String(id).padStart(4,'0')}
 function esc(s){return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
 function showToast(msg){els.toast.textContent=msg;els.toast.classList.add('show');clearTimeout(showToast.t);showToast.t=setTimeout(()=>els.toast.classList.remove('show'),1600)}
 
+function parseCsv(text){
+ const rows=[];let row=[],cell='',quoted=false;
+ text=String(text||'').replace(/^\ufeff/,'');
+ for(let i=0;i<text.length;i++){
+  const c=text[i];
+  if(quoted){if(c==='"'&&text[i+1]==='"'){cell+='"';i++}else if(c==='"'){quoted=false}else{cell+=c}}
+  else if(c==='"'){quoted=true}
+  else if(c===','){row.push(cell);cell=''}
+  else if(c==='\n'){row.push(cell.replace(/\r$/,''));rows.push(row);row=[];cell=''}
+  else{cell+=c}
+ }
+ if(cell.length||row.length){row.push(cell.replace(/\r$/,''));rows.push(row)}
+ if(!rows.length)return [];
+ const headers=rows.shift().map(h=>h.trim());
+ return rows.filter(r=>r.some(v=>String(v).trim()!=='')).map(r=>Object.fromEntries(headers.map((h,i)=>[h,r[i]??''])));
+}
+function splitRelations(text){return String(text||'').trim()?String(text).split(/\s+\/\s+/).map(x=>x.trim()).filter(Boolean):[]}
+function relationFromText(text,withQty=false){
+ let raw=String(text||'').trim(),quantity=1;
+ if(withQty){const q=raw.match(/\s*[×xX]\s*(\d+(?:\.\d+)?)\s*$/);if(q){quantity=Number(q[1]);raw=raw.slice(0,q.index).trim()}}
+ const ref=parseRef(raw);const obj={itemId:ref.itemId,name:ref.name};if(withQty)obj.quantity=quantity;return obj;
+}
+function rowsToBase(rows){
+ const mapped=rows.map(r=>{
+  const id=Number(String(r['図鑑番号']??r['id']??'').replace(/^#/,'').trim());
+  if(!Number.isInteger(id)||id<1||id>2428)return null;
+  return {id,name:String(r['アイテム名']??r['name']??'').trim(),category:String(r['カテゴリ']??r['category']??'').trim(),researchStatus:String(r['調査状況']??r['researchStatus']??'未特定').trim()||'未特定',acquire:String(r['入手方法・補足']??r['acquire']??'').trim(),sell:String(r['売値']??r['sell']??'').trim(),source:String(r['出典URL']??r['source']??'').trim(),note:String(r['備考']??r['note']??'').trim(),materials:splitRelations(r['使用材料']).map(x=>relationFromText(x,true)),machines:splitRelations(r['対応加工機']).map(x=>relationFromText(x,false)),updatedAt:String(r['最終更新']??'').trim()};
+ }).filter(Boolean);
+ const byId=new Map(mapped.map(x=>[x.id,x]));
+ return Array.from({length:2428},(_,i)=>byId.get(i+1)||{id:i+1,name:'',category:'',researchStatus:'未特定',acquire:'',sell:'',source:'',note:'',materials:[],machines:[]});
+}
+async function loadLatestMaster(){
+ try{
+  const res=await fetch(`initial_item_master.csv?v=${Date.now()}`,{cache:'no-store'});
+  if(!res.ok)throw new Error(`HTTP ${res.status}`);
+  const rows=parseCsv(await res.text());
+  const latest=rowsToBase(rows);
+  if(latest.length!==2428)throw new Error('item count mismatch');
+  base=latest;baseMap=new Map(base.map(x=>[x.id,x]));
+  return true;
+ }catch(err){console.warn('CSV master load failed; embedded fallback is used.',err);return false}
+}
 function buildLists(){
  const cats=[...new Set(base.map(x=>x.category).filter(Boolean))].sort((a,b)=>a.localeCompare(b,'ja'));
  els.category.innerHTML='<option value="">すべてのカテゴリ</option>'+cats.map(c=>`<option>${esc(c)}</option>`).join('');
@@ -122,14 +162,14 @@ function filtered(){
  let arr=base.map(x=>merged(x.id)); const q=els.search.value.trim().toLowerCase(); const cat=els.category.value;
  if(q)arr=arr.filter(x=>pad(x.id).includes(q)||String(x.id).includes(q)||(x.name||'').toLowerCase().includes(q));
  if(cat)arr=arr.filter(x=>x.category===cat);
- arr=arr.filter(x=>{const ob=isObtained(x.id), unk=!x.name, rec=(x.materials?.length||0)>0||(x.machines?.length||0)>0; if(activeFilter==='missing')return !ob;if(activeFilter==='obtained')return ob;if(activeFilter==='unknown')return unk;if(activeFilter==='recipe')return rec;if(activeFilter==='manual')return manualFlag(x);return true});
+ arr=arr.filter(x=>{const ob=isObtained(x.id), unk=!x.name; if(activeFilter==='missing')return !ob;if(activeFilter==='obtained')return ob;if(activeFilter==='unknown')return unk;return true});
  if(els.sort.value==='name')arr.sort((a,b)=>(a.name||'~~~').localeCompare(b.name||'~~~','ja')||a.id-b.id);
  if(els.sort.value==='updated')arr.sort((a,b)=>(b.updatedAt||'').localeCompare(a.updatedAt||'')||a.id-b.id);
  return arr;
 }
 function render(){renderStats();const arr=filtered();els.shownCount.textContent=`${arr.length.toLocaleString()}件を表示`;
  if(!arr.length){els.items.innerHTML='<div class="empty">条件に合うアイテムがないよ 🌱</div>';return}
- els.items.innerHTML=arr.map(x=>{const ob=isObtained(x.id),unk=!x.name,recipe=(x.materials?.length||0)>0||(x.machines?.length||0)>0;return `<article class="item ${ob?'obtained':''} ${unk?'unknown':''}" data-id="${x.id}"><div class="no">#${pad(x.id)}</div><div><div class="name">${esc(x.name||'未登録アイテム')}</div><div class="meta">${x.category?`<span class="tag">${esc(x.category)}</span>`:''}${recipe?'<span class="tag recipe">🥣 レシピあり</span>':''}${manualFlag(x)?'<span class="tag manual">✎ 手入力</span>':''}<button class="tag edit-btn" type="button" data-edit="${x.id}">編集</button></div></div><button class="status-btn" type="button" data-toggle="${x.id}">${ob?'✓ 取得済':'未取得'}</button></article>`}).join('');
+ els.items.innerHTML=arr.map(x=>{const ob=isObtained(x.id),unk=!x.name;const machineTags=(x.machines||[]).map(r=>`<span class="tag machine">⚙ ${esc(machineLabel(r))}</span>`).join('');return `<article class="item ${ob?'obtained':''} ${unk?'unknown':''}" data-id="${x.id}"><div class="no">#${pad(x.id)}</div><div><div class="name">${esc(x.name||'未登録アイテム')}</div><div class="meta">${x.category?`<span class="tag">${esc(x.category)}</span>`:''}${machineTags}<button class="tag edit-btn" type="button" data-edit="${x.id}">編集</button></div></div><button class="status-btn" type="button" data-toggle="${x.id}">${ob?'✓ 取得済':'未取得'}</button></article>`}).join('');
 }
 function toggle(id){state.obtained[id]=!isObtained(id);saveState();render()}
 
@@ -137,6 +177,7 @@ function openEditor(id){editingId=id;const x=merged(id);$('#editNo').textContent
  els.materials.innerHTML='';(x.materials||[]).forEach(addMaterialRow);els.machines.innerHTML='';(x.machines||[]).forEach(addMachineRow);els.editor.showModal();}
 function parseRef(v){const m=String(v).match(/^\s*(\d{1,4})\s*\|\s*(.+)$/);if(m){const id=Number(m[1]);return {itemId:baseMap.has(id)?id:null,name:m[2].trim()}}return {itemId:null,name:String(v).trim()}}
 function refDisplay(r){if(r.itemId&&baseMap.has(r.itemId)){const x=merged(r.itemId);return `${pad(r.itemId)} | ${x.name||r.name||'未登録アイテム'}`}return r.name||''}
+function machineLabel(r){if(r.itemId&&baseMap.has(r.itemId)){const x=merged(r.itemId);return x.name||r.name||'未登録加工機'}return r.name||'未登録加工機'}
 function addMaterialRow(data={}){const row=document.createElement('div');row.className='relation';row.innerHTML=`<input class="field mini rel-name" list="itemList" placeholder="材料名" value="${esc(refDisplay(data))}"><input class="field mini rel-qty" type="number" min="0" step="1" inputmode="numeric" placeholder="個数" value="${esc(data.quantity??1)}"><button class="remove" type="button" aria-label="削除">×</button>`;row.querySelector('.remove').addEventListener('click',()=>row.remove());els.materials.appendChild(row)}
 function addMachineRow(data={}){const row=document.createElement('div');row.className='relation machine-rel';row.innerHTML=`<input class="field mini rel-name" list="machineList" placeholder="加工機名" value="${esc(refDisplay(data))}"><button class="remove" type="button" aria-label="削除">×</button>`;row.querySelector('.remove').addEventListener('click',()=>row.remove());els.machines.appendChild(row)}
 function collectRelations(container,withQty){return [...container.querySelectorAll('.relation')].map(r=>{const ref=parseRef(r.querySelector('.rel-name').value);if(!ref.name&&!ref.itemId)return null;const obj={itemId:ref.itemId,name:ref.name};if(withQty)obj.quantity=Math.max(0,Number(r.querySelector('.rel-qty').value||1));return obj}).filter(Boolean)}
@@ -157,7 +198,8 @@ els.items.addEventListener('click',e=>{const edit=e.target.closest('[data-edit]'
 $('#chips').addEventListener('click',e=>{const b=e.target.closest('[data-filter]');if(!b)return;activeFilter=b.dataset.filter;$$('.chip').forEach(x=>x.classList.toggle('active',x===b));render()});
 $('#closeEditor').addEventListener('click',()=>els.editor.close());$('#cancelEditor').addEventListener('click',()=>els.editor.close());els.editor.addEventListener('click',e=>{if(e.target===els.editor)els.editor.close()});els.form.addEventListener('submit',saveEditor);$('#addMaterial').addEventListener('click',()=>addMaterialRow());$('#addMachine').addEventListener('click',()=>addMachineRow());$('#resetItem').addEventListener('click',resetItem);$('#exportJson').addEventListener('click',exportJson);$('#exportCsv').addEventListener('click',exportCsv);$('#importJson').addEventListener('change',e=>{const f=e.target.files?.[0];if(f)importJson(f);e.target.value=''});
 
-buildLists();render();
+async function init(){const fresh=await loadLatestMaster();buildLists();render();if(fresh)showToast('最新のアイテム情報を読み込んだよ ✓')}
+init();
 })();
 </script>
 </body>
