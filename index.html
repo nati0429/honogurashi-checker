@@ -14,7 +14,7 @@
 <body>
 <div class="app" id="app">
   <section class="hero">
-    <div><h1>🌿 ほの暮らしコンプチェッカー <span class="version-badge">v0.2.5</span></h1><p>2428個の図鑑を、遊びながら少しずつ育てるチェックリスト。</p></div>
+    <div><h1>🌿 ほの暮らしコンプチェッカー <span class="version-badge">v0.2.6</span></h1><p>2428個の図鑑を、遊びながら少しずつ育てるチェックリスト。</p></div>
     <div class="backup-actions">
       <button class="btn" id="exportJson">JSONバックアップ</button>
       <label class="btn" for="importJson">JSON復元</label><input class="file-input" id="importJson" type="file" accept="application/json,.json">
@@ -88,7 +88,7 @@
 <script>
 (()=>{
 'use strict';
-const VERSION='0.2.5';
+const VERSION='0.2.6';
 const KEY='honogurashi-checker-v0.1';
 let base=JSON.parse(document.getElementById('base-data').textContent);
 let baseMap=new Map(base.map(x=>[x.id,x]));
@@ -132,10 +132,10 @@ function rowsToBase(rows){
  const mapped=rows.map(r=>{
   const id=Number(String(r['図鑑番号']??r['id']??'').replace(/^#/,'').trim());
   if(!Number.isInteger(id)||id<1||id>2428)return null;
-  return {id,name:String(r['アイテム名']??r['name']??'').trim(),category:String(r['カテゴリ']??r['category']??'').trim(),researchStatus:String(r['調査状況']??r['researchStatus']??'未特定').trim()||'未特定',acquire:String(r['入手方法・補足']??r['acquire']??'').trim(),sell:String(r['売値']??r['sell']??'').trim(),source:String(r['出典URL']??r['source']??'').trim(),note:String(r['備考']??r['note']??'').trim(),materials:splitRelations(r['使用材料']).map(x=>relationFromText(x,true)),machines:splitRelations(r['対応加工機']).map(x=>relationFromText(x,false)),plantingSeasons:String(r['植付季節']??r['plantingSeasons']??'').split(/[・,、/\s]+/).map(x=>x.trim()).filter(x=>['春','夏','秋','冬'].includes(x)),harvestSeasons:String(r['収穫季節']??r['harvestSeasons']??r['季節']??r['seasons']??'').split(/[・,、/\s]+/).map(x=>x.trim()).filter(x=>['春','夏','秋','冬'].includes(x)),machineCandidate:/^(1|true|yes|on|○|〇|候補)$/i.test(String(r['加工機候補']??r['machineCandidate']??'').trim()),updatedAt:String(r['最終更新']??'').trim()};
+  return {id,name:String(r['アイテム名']??r['name']??'').trim(),category:String(r['カテゴリ']??r['category']??'').trim(),researchStatus:String(r['調査状況']??r['researchStatus']??'未特定').trim()||'未特定',acquire:String(r['入手方法・補足']??r['acquire']??'').trim(),sell:String(r['売値']??r['sell']??'').trim(),source:String(r['出典URL']??r['source']??'').trim(),note:String(r['備考']??r['note']??'').trim(),materials:splitRelations(r['使用材料']).map(x=>relationFromText(x,true)),machines:splitRelations(r['対応加工機']).map(x=>relationFromText(x,false)),plantingSeasons:String(r['植付季節']??r['plantingSeasons']??'').split(/[・,、/\s]+/).map(x=>x.trim()).filter(x=>['春','夏','秋','冬'].includes(x)),harvestSeasons:String(r['収穫季節']??r['harvestSeasons']??r['季節']??r['seasons']??'').split(/[・,、/\s]+/).map(x=>x.trim()).filter(x=>['春','夏','秋','冬'].includes(x)),machineCandidate:/^(1|true|yes|on|○|〇|候補)$/i.test(String(r['加工機候補']??r['machineCandidate']??'').trim()),updatedAt:String(r['最終更新']??'').trim(),initialObtained:/^(取得済|1|true|yes|on|○|〇)$/i.test(String(r['取得状況']??r['obtained']??'').trim())};
  }).filter(Boolean);
  const byId=new Map(mapped.map(x=>[x.id,x]));
- return Array.from({length:2428},(_,i)=>byId.get(i+1)||{id:i+1,name:'',category:'',researchStatus:'未特定',acquire:'',sell:'',source:'',note:'',materials:[],machines:[],plantingSeasons:[],harvestSeasons:[]});
+ return Array.from({length:2428},(_,i)=>byId.get(i+1)||{id:i+1,name:'',category:'',researchStatus:'未特定',acquire:'',sell:'',source:'',note:'',materials:[],machines:[],plantingSeasons:[],harvestSeasons:[],machineCandidate:false,updatedAt:'',initialObtained:false});
 }
 async function loadLatestMaster(){
  try{
@@ -145,6 +145,8 @@ async function loadLatestMaster(){
   const latest=rowsToBase(rows);
   if(latest.length!==2428)throw new Error('item count mismatch');
   base=latest;baseMap=new Map(base.map(x=>[x.id,x]));
+  for(const item of base){if(state.obtained[item.id]===undefined&&item.initialObtained===true)state.obtained[item.id]=true;}
+  saveState();
   return true;
  }catch(err){console.warn('CSV master load failed; embedded fallback is used.',err);return false}
 }
